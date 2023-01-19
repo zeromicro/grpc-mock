@@ -1,0 +1,24 @@
+Name:  "control-api"
+Host:  "0.0.0.0"
+Port:  8081
+
+ProxyPort: :9999
+
+TestedAppNames: ["xxx"]
+
+BizRedis:
+  Host: "127.0.0.1:6379"
+
+Upstreams:
+  -
+     Endpoints:
+      - xxx:9090
+  -
+     Endpoints:
+      - xxx:9090
+
+MockEnableKey: mock
+MockEnableValue: "yes"
+MockCaseKey: case_name
+MockCustomCaseKey: custom_case
+TestedAppNameKey: tested_app_name
