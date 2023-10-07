@@ -1,0 +1,11 @@
+ControlService:
+  Name: "ControlService"
+  Port: 8080
+  Timeout: 0
+
+ProxyService:
+  Name: "ProxyService"
+  ListenOn: ":8081"
+  Timeout: 0
+
+
