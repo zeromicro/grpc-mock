@@ -104,21 +104,21 @@ type UpstreamDelResponse struct {
 
 type RpcClientConfig struct {
 	Name      string   `json:"name"`
-	Etcd      EtcdConf `json:",optional"`
-	Endpoints []string `json:",optional"`
-	Target    string   `json:",optional"`
-	App       string   `json:",optional"`
-	Token     string   `json:",optional"`
+	Etcd      EtcdConf `json:"etcd,optional"`
+	Endpoints []string `json:"endpoints,optional"`
+	Target    string   `json:"target,optional"`
+	App       string   `json:"app,optional"`
+	Token     string   `json:"token,optional"`
 }
 
 type EtcdConf struct {
-	Hosts              []string `json:",optional"`
-	Key                string   `json:",optional"`
-	ID                 int64    `json:",optional"`
-	User               string   `json:",optional"`
-	Pass               string   `json:",optional"`
-	CertFile           string   `json:",optional"`
-	CertKeyFile        string   `json:",optional"`
-	CACertFile         string   `json:",optional"`
-	InsecureSkipVerify bool     `json:",optional"`
+	Hosts              []string `json:"hosts,optional"`
+	Key                string   `json:"key,optional"`
+	ID                 int64    `json:"id,optional"`
+	User               string   `json:"user,optional"`
+	Pass               string   `json:"pass,optional"`
+	CertFile           string   `json:"cert_file,optional"`
+	CertKeyFile        string   `json:"cert_key_file,optional"`
+	CACertFile         string   `json:"ca_cert_file,optional"`
+	InsecureSkipVerify bool     `json:"insecure_skip_verify,optional"`
 }
