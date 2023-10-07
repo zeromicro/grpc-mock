@@ -1,0 +1,158 @@
+type (
+	BaseResponse {
+		ErrorCode int    `json:"error_code"`
+		ErrorMsg  string `json:"error_msg"`
+	}
+
+	UpstreamListResponse {
+		BaseResponse
+		Upstreams []RpcClientConfig `json:"upstreams"`
+	}
+
+	MethodListResponse {
+		BaseResponse
+		List []Method `json:"list"`
+	}
+
+	Method {
+		Service string `json:"service"`
+		Name    string `json:"name"`
+	}
+
+	MethodListRequest {
+		Upstream string `json:"upstream"`
+	}
+
+	MethodDetailRequest {
+		FullMethodName string `json:"full_method_name"`
+	}
+
+	MethodDetailResponse {
+		BaseResponse
+		MethodName string    `json:"method_name"`
+		ProtoDesc  string    `json:"proto_desc"`
+		In         FieldItem `json:"in"`
+		Out        FieldItem `json:"out"`
+	}
+
+	FieldItem {
+		Name      string `json:"name"`
+		ProtoDesc string `json:"proto_desc"`
+		JsonDesc  string `json:"json_desc"`
+	}
+)
+
+type (
+	CaseListRequest {
+		MethodNames []string `json:"method_names"`
+	}
+
+	CaseListResponse {
+		BaseResponse
+		Cases []Case `json:"cases"`
+	}
+
+	Case {
+		MethodName string `json:"method_name"`
+		Name       string `json:"name"`
+		Rule       string `json:"rule, optional"`
+		Body       string `json:"body"`
+	}
+
+	CaseDelRequest {
+		MethodName string `json:"method_name"`
+		Name       string `json:"name"`
+	}
+
+	CaseDelRespnse {
+		BaseResponse
+	}
+
+	CaseSetRequest {
+		Cases []Case `json:"cases"`
+	}
+
+	CaseSetResponse {
+		BaseResponse
+	}
+
+	CaseDetailRequest {
+		MethodName string `json:"method_name"`
+		Name       string `json:"name"`
+	}
+
+	CaseDetailResponse {
+		BaseResponse
+		Detail Case `json:"detail"`
+	}
+)
+
+type (
+	UpstreamSetRequest {
+		Upstreams []RpcClientConfig `json:"upstreams"`
+	}
+
+	UpstreamSetResponse {
+		BaseResponse
+	}
+
+	UpstreamDelRequest {
+		Upstreams []string `json:"upstreams"`
+	}
+
+	UpstreamDelResponse {
+		BaseResponse
+	}
+)
+
+type (
+	RpcClientConfig {
+		Name      string   `json:"name"`
+		Etcd      EtcdConf `json:",optional"`
+		Endpoints []string `json:",optional"`
+		Target    string   `json:",optional"`
+		App       string   `json:",optional"`
+		Token     string   `json:",optional"`
+	}
+
+	EtcdConf {
+		Hosts              []string `json:",optional"`
+		Key                string   `json:",optional"`
+		ID                 int64    `json:",optional"`
+		User               string   `json:",optional"`
+		Pass               string   `json:",optional"`
+		CertFile           string   `json:",optional"`
+		CertKeyFile        string   `json:",optional"`
+		CACertFile         string   `json:",optional"`
+		InsecureSkipVerify bool     `json:",optional"`
+	}
+)
+
+service control-api {
+	@handler UpstreamList
+	get /upstreams returns (UpstreamListResponse)
+
+	@handler UpstreamSet
+	post /upstreams/set (UpstreamSetRequest) returns (UpstreamSetResponse)
+
+	@handler UpstreamDel
+	post /upstreams/del (UpstreamDelRequest) returns (UpstreamDelResponse)
+
+	@handler MethodList
+	get /methods (MethodListRequest) returns (MethodListResponse)
+
+	@handler MethodDetail
+	get /methods/detail (MethodDetailRequest) returns (MethodDetailResponse)
+
+	@handler CaseList
+	get /cases (CaseListRequest) returns (CaseListResponse)
+
+	@handler CaseSet
+	post /cases/set (CaseSetRequest) returns (CaseSetResponse)
+
+	@handler CaseDel
+	post /cases/del (CaseDelRequest) returns (CaseDelRespnse)
+
+	@handler CaseDetail
+	get /cases/detail (CaseDetailRequest) returns (CaseDetailResponse)
+}
